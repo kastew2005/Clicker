@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#090b16">
+  <title>NEON BURROW — Crypto Clicker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">N</span><div><strong>NEON BURROW</strong><small>CRYPTO MINING CLUB</small></div></div>
+      <button class="icon-btn" id="profileButton" aria-label="Профиль">◈</button>
+    </header>
+
+    <main id="mainView">
+      <section class="view active" id="tapView">
+        <div class="hero-row">
+          <div><span class="eyebrow">ВАШ БАЛАНС</span><div class="balance" id="coinBalance">0 <span>NB</span></div></div>
+          <div class="level-pill">LVL <b id="playerLevel">1</b></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><span>ПРИБЫЛЬ / ЧАС</span><b id="profitHour">0 NB</b></div>
+          <div class="stat-card"><span>ЗА ТАП</span><b id="tapPower">+1 NB</b></div>
+        </div>
+        <div class="character-stage">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="stage-glow"></div>
+          <button class="character-button skin-cyan" id="tapCharacter" aria-label="Тапнуть персонажа">
+            <svg viewBox="0 0 220 220" class="hamster" aria-hidden="true">
+              <defs>
+                <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f4ff"/><stop offset="1" stop-color="#aab4d8"/></linearGradient>
+                <linearGradient id="belly" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7ed"/><stop offset="1" stop-color="#e8d9e8"/></linearGradient>
+                <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7cf7ff"/><stop offset="1" stop-color="#8c6bff"/></linearGradient>
+              </defs>
+              <ellipse cx="110" cy="184" rx="59" ry="13" fill="#050713" opacity=".55"/>
+              <path d="M57 78 Q43 31 75 35 Q97 37 97 69 M123 69 Q123 37 145 35 Q177 31 163 78" fill="url(#fur)" stroke="#7783ad" stroke-width="4"/>
+              <path d="M68 75 Q63 49 78 49 Q91 50 89 72 M131 72 Q129 50 142 49 Q157 49 152 75" fill="#f28bb4"/>
+              <ellipse cx="110" cy="120" rx="66" ry="66" fill="url(#fur)" stroke="#7885ad" stroke-width="4"/>
+              <ellipse cx="110" cy="139" rx="43" ry="35" fill="url(#belly)"/>
+              <ellipse cx="82" cy="119" rx="19" ry="14" fill="#f2a6c6" opacity=".72"/><ellipse cx="138" cy="119" rx="19" ry="14" fill="#f2a6c6" opacity=".72"/>
+              <path d="M76 94 Q89 80 101 94" fill="none" stroke="#303a62" stroke-width="6" stroke-linecap="round"/>
+              <path d="M119 94 Q132 80 145 94" fill="none" stroke="#303a62" stroke-width="6" stroke-linecap="round"/>
+              <ellipse cx="88" cy="103" rx="7" ry="9" fill="#12162c"/><ellipse cx="132" cy="103" rx="7" ry="9" fill="#12162c"/>
+              <circle cx="90" cy="100" r="2.5" fill="#fff"/><circle cx="134" cy="100" r="2.5" fill="#fff"/>
+              <path d="M102 126 Q110 119 118 126 Q110 136 102 126" fill="#ff6eab"/>
+              <path d="M110 133 Q106 143 97 140 M110 133 Q114 143 123 140" fill="none" stroke="#6b4869" stroke-width="3" stroke-linecap="round"/>
+              <path d="M52 111 Q35 107 31 118 M52 124 Q35 124 32 134 M168 111 Q185 107 189 118 M168 124 Q185 124 188 134" stroke="#fff" stroke-width="2" opacity=".8" fill="none"/>
+              <path d="M65 69 Q110 46 155 69 L150 86 Q110 72 70 86Z" fill="url(#visor)" stroke="#5362d8" stroke-width="3"/>
+              <path d="M79 70 L99 65 M121 65 L141 70" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+              <circle cx="110" cy="157" r="5" fill="#6e7cff"/>
+            </svg>
+            <span class="tap-hint">TAP TO MINE</span>
+          </button>
+          <div class="float-layer" id="floatLayer"></div>
+        </div>
+        <div class="energy-panel">
+          <div class="energy-head"><span>⚡ ЭНЕРГИЯ</span><b id="energyText">1000 / 1000</b></div>
+          <div class="energy-track"><div id="energyFill"></div></div>
+          <div class="energy-foot"><span id="energyRegen">+1 каждые 1.2 сек</span><span id="tapCombo">COMBO ×1</span></div>
+        </div>
+        <div class="daily-strip"><div><b>🎁 Ежедневный бонус</b><small id="dailyStatus">Забери награду за вход</small></div><button class="small-btn" id="dailyButton">ЗАБРАТЬ</button></div>
+      </section>
+
+      <section class="view" id="mineView">
+        <div class="section-heading"><div><span class="eyebrow">РАЗВИВАЙ ИМПЕРИЮ</span><h1>Шахта <span>&</span> улучшения</h1></div><div class="mini-balance" id="shopBalance">0 NB</div></div>
+        <div class="shop-tabs"><button class="shop-tab active" data-shop="all">Все</button><button class="shop-tab" data-shop="passive">Доход</button><button class="shop-tab" data-shop="active">Тап / энергия</button></div>
+        <div id="upgradeList" class="upgrade-list"></div>
+        <div class="combo-card"><div class="combo-icon">✦</div><div class="combo-copy"><b>НЕОНОВЫЙ СИНДИКАТ</b><small>Купи «Авто-майнер» + «Квантовый тап» и получи бонус</small><span id="comboStatus">Бонус: +2 500 NB</span></div><button id="comboButton" class="small-btn">СОБРАТЬ</button></div>
+      </section>
+
+      <section class="view" id="skinsView">
+        <div class="section-heading"><div><span class="eyebrow">ТВОЙ АВАТАР</span><h1>Коллекция <span>скинов</span></h1></div></div>
+        <div class="skin-grid" id="skinGrid"></div>
+      </section>
+
+      <section class="view" id="gameView">
+        <div class="section-heading"><div><span class="eyebrow">ЕЖЕДНЕВНЫЙ ВЗЛОМ</span><h1>Мини-игра <span>«Сейф»</span></h1></div><div class="timer-pill" id="safeTimer">30.0s</div></div>
+        <div class="safe-card">
+          <div class="safe-emblem">▦</div><h2>Взломай сейф</h2>
+          <p>Угадай трёхзначный код. После каждой попытки появится подсказка: сколько цифр на правильных местах.</p>
+          <div class="code-slots"><span id="slot0">?</span><span id="slot1">?</span><span id="slot2">?</span></div>
+          <div class="keypad" id="keypad">
+            <button data-digit="1">1</button><button data-digit="2">2</button><button data-digit="3">3</button>
+            <button data-digit="4">4</button><button data-digit="5">5</button><button data-digit="6">6</button>
+            <button data-digit="7">7</button><button data-digit="8">8</button><button data-digit="9">9</button>
+            <button data-action="clear" class="key-alt">⌫</button><button data-digit="0">0</button><button data-action="submit" class="key-enter">↵</button>
+          </div>
+          <div class="safe-message" id="safeMessage">Нажми «Начать взлом», чтобы сыграть.</div>
+          <button class="primary-btn" id="startSafe">НАЧАТЬ ВЗЛОМ</button>
+        </div>
+      </section>
+
+      <section class="view" id="exchangeView">
+        <div class="section-heading"><div><span class="eyebrow">ЦЕНТР УПРАВЛЕНИЯ</span><h1>Биржа <span>/ профиль</span></h1></div></div>
+        <div class="profile-card"><div class="profile-avatar">N</div><div><b>Неоновый майнер</b><small id="profileRank">Новичок • Уровень 1</small></div><div class="profile-level" id="profileLevel">01</div></div>
+        <div class="exchange-stats"><div><small>Всего заработано</small><b id="totalEarned">0 NB</b></div><div><small>Всего тапов</small><b id="totalTaps">0</b></div><div><small>Куплено улучшений</small><b id="totalUpgrades">0</b></div><div><small>Дней в игре</small><b id="daysPlayed">1</b></div></div>
+        <div class="settings-card"><div><b>Автосохранение</b><small>Прогресс хранится на этом устройстве</small></div><span class="status-dot">АКТИВНО</span></div>
+        <button class="danger-btn" id="resetButton">СБРОСИТЬ ПРОГРЕСС</button>
+        <p class="tiny-note">NEON BURROW — локальная браузерная игра. Монеты не имеют денежной стоимости.</p>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-view="tapView"><span>◉</span><small>Тап</small></button>
+      <button class="nav-item" data-view="mineView"><span>▤</span><small>Шахта</small></button>
+      <button class="nav-item" data-view="skinsView"><span>✧</span><small>Скины</small></button>
+      <button class="nav-item" data-view="gameView"><span>▦</span><small>Мини-игра</small></button>
+      <button class="nav-item" data-view="exchangeView"><span>◈</span><small>Биржа</small></button>
+    </nav>
+    <div id="toast" class="toast"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
